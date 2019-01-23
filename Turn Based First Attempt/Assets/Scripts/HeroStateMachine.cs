@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class HeroStateMachine : MonoBehaviour {
 
+    private BattleStateMachine BSM;
     public BaseHero hero;
 
     public enum Turnstate
@@ -28,6 +29,7 @@ public class HeroStateMachine : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+        BSM = GameObject.Find("BattleManager").GetComponent<BattleStateMachine>();
         CurrentState = Turnstate.Processing;
 	}
 	
@@ -47,7 +49,8 @@ public class HeroStateMachine : MonoBehaviour {
             break;
 
             case (Turnstate.Addtolist):
-
+                BSM.HerosToManage.Add(this.gameObject);
+                CurrentState = Turnstate.Waiting;
 
                 break;
 
@@ -56,10 +59,7 @@ public class HeroStateMachine : MonoBehaviour {
 
                 break;
 
-            case (Turnstate.Selecting):
-
-
-                break;
+          
 
             case (Turnstate.Action):
 
